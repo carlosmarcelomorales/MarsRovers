@@ -1,17 +1,18 @@
 <template>
     <div>
-        {{message}}
+        <Board :rovers="roversInitialPosition" />
     </div>
 </template>
 <script>
+import Board from "./Board";
 const default_layout = "default";
 
-
 export default {
+    components: {Board},
     computed: {},
     data() {
         return {
-            message:'Hello World'
+            roversInitialPosition: 131,
         }
     }
 };
