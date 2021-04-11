@@ -26,6 +26,7 @@
             for(let i = 1; i <= this.totalCells; i ++)
             {
 
+                let isRover = false;
                 cell = document.createElement("div")
                 cell.classList.add("cell");
                 cell.setAttribute('data-cell', i);
@@ -35,15 +36,17 @@
 
                 if (i == this.rovers) {
                     cell.classList.add("rovers");
-                    continue;
+                    isRover = true;
                 }
 
                 let randNumber = Math.floor(Math.random() * 20) + 1;
-                let isObstacle = (randNumber >= 18) ? true: false;
+                let isObstacle = (randNumber > 18) ? true: false;
+
+                if (isRover)
+                    isObstacle = false;
 
                 if (isObstacle) {
                     cell.classList.add("obstacle");
-                    console.log('obstacle');
                 }
 
                 this.cells.push({
@@ -75,7 +78,6 @@
         text-align:center;
         border: 1px solid #000;
     }
-
     .obstacle {
         background: black;
     }

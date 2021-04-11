@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any}', 'App\Http\Controllers\RoversController@index')->where('any', '.*');
+Route::post('/instructions', 'App\Http\Controllers\RoversController@instructions');
+
+Route::get('/', 'App\Http\Controllers\RoversController@index')->where('any', '.*');
+
+
