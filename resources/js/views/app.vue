@@ -5,7 +5,7 @@
             v-model="instructions"
         />
         <span v-show="error" class="error">{{ errorMessage }}</span>
-        <Board :rovers="roversInitialPosition" />
+        <Board :rovers="roversInitialPosition" ref="board"/>
     </fragment>
 </template>
 <script>
@@ -23,8 +23,12 @@ export default {
             roversInitialPosition: 131,
             instructions: '',
             errorMessage: '',
-            error: false
+            error: false,
+            currentPosition: ''
         }
+    },
+    mounted() {
+        this.currentPosition = this.roversInitialPosition
     },
     watch: {
         instructions() {
@@ -35,7 +39,12 @@ export default {
         sendInstructions() {
             const trimmedText = this.instructions.trim()
             if (trimmedText) {
-                axios.post('/instructions', {instructions: this.instructions})
+
+                axios.post('/instructions', {
+                    instructions: this.instructions,
+                    cells: this.$refs.board.cells,
+                    currentPosition: this.currentPosition
+                })
                     .then(response => {
                         if (!response.data.success) {
                             this.error = true;
@@ -52,5 +61,8 @@ export default {
 <style>
     .error {
         color: red;
+    }
+    .body {
+        width : 1680px;
     }
 </style>

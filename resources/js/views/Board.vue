@@ -50,7 +50,7 @@
                 }
 
                 this.cells.push({
-                    id: 1,
+                    id: i,
                     isObstacle : isObstacle
                 })
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Instructions;
+use App\Http\Models\Rovers;
+use App\Http\Services\MoveRoversService;
 use Illuminate\Http\Request;
 
 class RoversController extends Controller
@@ -15,22 +17,31 @@ class RoversController extends Controller
     public function instructions(Request $request)
     {
         $instructions = $request->instructions;
-        $error = false;
+        $cells = $request->cells;
+        $currentPosition = $request->currentPosition;
 
         $arrayInstructions = str_split($instructions);
 
-        foreach ($arrayInstructions as $instruction) {
-            if (!in_array(strtoupper($instruction), Instructions::VALID_INSTRUCTIONS)) {
-                $error = true;
-                break;
-            }
-        }
-
+        $instructionsModel = new Instructions();
+        $error = $instructionsModel->checkInstructions($arrayInstructions);
 
         if ($error) {
             return response()->json([
                 'success' => false,
                 'errorMessage' => 'Incorrect instructions! Read the manual'
+            ]);
+        }
+
+        $roversModel = new Rovers($currentPosition);
+
+        $moveRoversService = new MoveRoversService($roversModel, $cells);
+
+        $resultMoving = $moveRoversService($arrayInstructions);
+
+        if ($resultMoving['errorObstacleFound']) {
+            return response()->json([
+                'success' => false,
+                'errorMessage' => 'Obstacle found at position '. $resultMoving['obstaclePosition'].'! Are you drunken? Avoiding sequence.'
             ]);
         }
     }
