@@ -13,6 +13,7 @@ final class MoveRoversService
     private $cells;
     private $errorObstacleFound;
     private $obstaclePosition;
+    private $newPath;
 
     public function __construct(Rovers $rovers, array $cells)
     {
@@ -20,6 +21,7 @@ final class MoveRoversService
         $this->cells = $cells;
         $this->errorObstacleFound = false;
         $this->obstaclePosition = '';
+        $this->newPath = [];
     }
 
     public function __invoke(array $instructions)
@@ -49,11 +51,14 @@ final class MoveRoversService
             if ($this->errorObstacleFound) {
                 break;
             }
+
+            $this->newPath[] = $this->rovers->getCurrentPosition();
         }
 
         return [
             'errorObstacleFound' => $this->errorObstacleFound,
-            'obstaclePosition' => $this->obstaclePosition
+            'obstaclePosition'   => $this->obstaclePosition,
+            'newPath'            => $this->newPath
         ];
     }
 

@@ -5,8 +5,9 @@
         </label>
         <input type="text"
                class="input"
-               name="instructions"
+               :value="value"
                v-on="listeners"
+               :disabled="disabled"
         >
     </fragment>
 
@@ -14,6 +15,16 @@
 
 <script>
     export default {
+        props: {
+            disabled: {
+                type: Boolean,
+                required: true
+            },
+            value: {
+                type: String,
+                default: '',
+            }
+        },
         computed: {
             listeners () {
                 return {

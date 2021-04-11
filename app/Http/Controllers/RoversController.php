@@ -27,7 +27,7 @@ class RoversController extends Controller
 
         if ($error) {
             return response()->json([
-                'success' => false,
+                'success'      => false,
                 'errorMessage' => 'Incorrect instructions! Read the manual'
             ]);
         }
@@ -39,11 +39,19 @@ class RoversController extends Controller
         $resultMoving = $moveRoversService($arrayInstructions);
 
         if ($resultMoving['errorObstacleFound']) {
-            return response()->json([
-                'success' => false,
-                'errorMessage' => 'Obstacle found at position '. $resultMoving['obstaclePosition'].'! Are you drunken? Avoiding sequence.'
-            ]);
+            $success = false;
+            $errorMessage = 'Obstacle found at position '. $resultMoving['obstaclePosition'].'! Are you drunken? Sequence aborted.';
+        } else {
+            $success = true;
+            $errorMessage = '';
         }
+
+        return response()->json([
+            'success'      => $success,
+            'errorMessage' => $errorMessage,
+            'newPath'      => $resultMoving['newPath']
+        ]);
+
     }
 
 }
