@@ -10,7 +10,7 @@ make init
 
 and this will build the docker images and start running containers. After this, go to 
 
-[http://localhost:8080/](http://localhost::8080)
+[http://localhost:8080/](http://localhost:8080/)
 
 
 ## How to use it
