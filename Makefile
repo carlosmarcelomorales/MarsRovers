@@ -15,6 +15,7 @@ build:
 	@docker-compose build
 
 ##    start: start docker image
+.PHONY : start
 start:
 	@docker-compose up -d
 
