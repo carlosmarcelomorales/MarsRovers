@@ -18,6 +18,14 @@ build:
 start:
 	@docker-compose up -d
 
+##    composer: install composer dependencies
+composer:
+	@composer install
+
+##    npm: install npm dependencies
+npm:
+	@npm install
+
 ##    stop:	stops containers
 stop:
 	@docker-compose down
@@ -27,5 +35,5 @@ remove:
 	@docker-compose -f docker-compose.yml rm -s -f
 
 ##    init all the application
-init: build start
+init: composer npm build start
 
