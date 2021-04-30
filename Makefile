@@ -8,8 +8,6 @@ SHELL := /bin/bash
 ROOT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 UID=$(shell id -u)
 
-.PHONY : start
-
 ##    build: Build services
 build:
 	@docker-compose build

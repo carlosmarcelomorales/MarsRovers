@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Models;
 
-
-final class Rovers
+class Rovers
 {
     private $currentPosition;
 

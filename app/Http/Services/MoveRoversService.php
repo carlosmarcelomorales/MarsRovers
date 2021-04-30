@@ -107,7 +107,7 @@ final class MoveRoversService
         }
     }
 
-    private function checkIfObstacle (int $nextPosition) : bool
+    private function checkIfObstacle (int $nextPosition) : ?bool
     {
         $isObstacle = $this->cells[$nextPosition - 1]['isObstacle'];
         if ($isObstacle) {
